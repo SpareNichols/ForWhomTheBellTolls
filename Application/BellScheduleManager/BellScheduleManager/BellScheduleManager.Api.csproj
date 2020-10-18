@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <UserSecretsId>472c666e-6173-4072-929c-6ea089843943</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Google.Apis.Calendar.v3" Version="1.49.0.2087" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.OpenIdConnect" Version="3.1.9" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Properties\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\BellScheduleManager.Common\BellScheduleManager.Common.csproj" />
+    <ProjectReference Include="..\BellScheduleManager.Resources\BellScheduleManager.Resources.csproj" />
+  </ItemGroup>
+
+
+</Project>

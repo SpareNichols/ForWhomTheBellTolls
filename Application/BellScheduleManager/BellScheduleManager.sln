@@ -1,0 +1,37 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30330.147
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BellScheduleManager.Api", "BellScheduleManager\BellScheduleManager.Api.csproj", "{79A5E42A-211D-4C83-8CC7-98AD83B27E62}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BellScheduleManager.Common", "BellScheduleManager.Common\BellScheduleManager.Common.csproj", "{167C6D0C-3A81-42DF-B470-569934576F92}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BellScheduleManager.Resources", "BellScheduleManager.Resources\BellScheduleManager.Resources.csproj", "{B77D6F2E-88B6-44B2-8341-9EF0D6AE5D7F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{79A5E42A-211D-4C83-8CC7-98AD83B27E62}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{79A5E42A-211D-4C83-8CC7-98AD83B27E62}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{79A5E42A-211D-4C83-8CC7-98AD83B27E62}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{79A5E42A-211D-4C83-8CC7-98AD83B27E62}.Release|Any CPU.Build.0 = Release|Any CPU
+		{167C6D0C-3A81-42DF-B470-569934576F92}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{167C6D0C-3A81-42DF-B470-569934576F92}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{167C6D0C-3A81-42DF-B470-569934576F92}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{167C6D0C-3A81-42DF-B470-569934576F92}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B77D6F2E-88B6-44B2-8341-9EF0D6AE5D7F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B77D6F2E-88B6-44B2-8341-9EF0D6AE5D7F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B77D6F2E-88B6-44B2-8341-9EF0D6AE5D7F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B77D6F2E-88B6-44B2-8341-9EF0D6AE5D7F}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {10CC3769-3A43-48EC-B8EB-78446BDF7656}
+	EndGlobalSection
+EndGlobal
