@@ -21,6 +21,7 @@ using Microsoft.Extensions.Options;
 
 namespace BellScheduleManager.Api.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class AuthController : ControllerBase
@@ -75,7 +76,7 @@ namespace BellScheduleManager.Api.Controllers
         public async Task<IActionResult> GoogleCallback(string code)
         {
             // Use empty user ID initially -- need token before knowing email address to use
-            var token = await flow.ExchangeCodeForTokenAsync("", code, _googleAuthOptions.RedirectUrl, System.Threading.CancellationToken.None).ConfigureAwait(false);
+            var token = await flow.ExchangeCodeForTokenAsync("", code, _googleAuthOptions.RedirectUrl, CancellationToken.None).ConfigureAwait(false);
 
             var oidcOptions = new OpenIdConnectOptions()
             {

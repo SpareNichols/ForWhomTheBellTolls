@@ -1,24 +1,26 @@
 import React from 'react'
-import { Navbar, Nav } from 'react-bootstrap'
+import { Navbar, Nav, NavDropdown } from 'react-bootstrap'
 import { observer } from 'mobx-react'
 import { useStores } from '../hooks/use-stores'
+import LoginButtonWithModal from './LoginModal'
 
 interface Props {
     
 }
 
 const Navigation = observer((props: Props) => {
-
     const { currentUserStore } = useStores();
 
     return (
-        <Navbar bg="light" expand="lg" fixed="top">
+        <Navbar bg="light" expand="lg">
             <Navbar.Brand>For Whom The Bell Tolls</Navbar.Brand>
             <Nav className="justify-content-end">
                 {(currentUserStore.isLoggedIn
-                    ? <div>{currentUserStore.user?.name}</div>
+                    ? <NavDropdown title={currentUserStore.user?.displayName} id="current-user-dropdown">
+                        <NavDropdown.Item onClick={() => currentUserStore.signMeOut()}>Log Out</NavDropdown.Item>
+                    </NavDropdown>
                     : <Nav.Item>
-                        <Nav.Link onClick={() => currentUserStore.getMe()}>Log In</Nav.Link>
+                        <LoginButtonWithModal/>
                     </Nav.Item>)}
             </Nav>
         </Navbar>
