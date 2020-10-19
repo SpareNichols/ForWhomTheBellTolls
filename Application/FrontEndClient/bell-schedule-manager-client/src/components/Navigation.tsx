@@ -9,7 +9,7 @@ interface Props {
 }
 
 const Navigation = observer((props: Props) => {
-    const { currentUserStore } = useStores();
+    const { currentUserStore, scheduleStore } = useStores();
 
     return (
         <Navbar bg="light" expand="lg">
@@ -17,7 +17,7 @@ const Navigation = observer((props: Props) => {
             <Nav className="justify-content-end">
                 {(currentUserStore.isLoggedIn
                     ? <NavDropdown title={currentUserStore.user?.displayName} id="current-user-dropdown">
-                        <NavDropdown.Item onClick={() => currentUserStore.signMeOut()}>Log Out</NavDropdown.Item>
+                        <NavDropdown.Item onClick={() => currentUserStore.signMeOut(scheduleStore)}>Log Out</NavDropdown.Item>
                     </NavDropdown>
                     : <Nav.Item>
                         <LoginButtonWithModal/>

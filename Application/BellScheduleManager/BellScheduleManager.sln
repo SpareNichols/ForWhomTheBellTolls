@@ -3,11 +3,20 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30330.147
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BellScheduleManager.Api", "BellScheduleManager\BellScheduleManager.Api.csproj", "{79A5E42A-211D-4C83-8CC7-98AD83B27E62}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BellScheduleManager.Api", "BellScheduleManager\BellScheduleManager.Api.csproj", "{79A5E42A-211D-4C83-8CC7-98AD83B27E62}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BellScheduleManager.Common", "BellScheduleManager.Common\BellScheduleManager.Common.csproj", "{167C6D0C-3A81-42DF-B470-569934576F92}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BellScheduleManager.Common", "BellScheduleManager.Common\BellScheduleManager.Common.csproj", "{167C6D0C-3A81-42DF-B470-569934576F92}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BellScheduleManager.Resources", "BellScheduleManager.Resources\BellScheduleManager.Resources.csproj", "{B77D6F2E-88B6-44B2-8341-9EF0D6AE5D7F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BellScheduleManager.Resources", "BellScheduleManager.Resources\BellScheduleManager.Resources.csproj", "{B77D6F2E-88B6-44B2-8341-9EF0D6AE5D7F}"
+	ProjectSection(ProjectDependencies) = postProject
+		{167C6D0C-3A81-42DF-B470-569934576F92} = {167C6D0C-3A81-42DF-B470-569934576F92}
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BellScheduleManager.Resources.Test", "BellScheduleManager.Resources.Test\BellScheduleManager.Resources.Test.csproj", "{D71524EC-36D8-4400-A3EC-8E9AE64FE224}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BellScheduleManager.Data", "BellScheduleManager.Data\BellScheduleManager.Data.csproj", "{F21FE734-03E9-40AA-8DDC-3E85DCA5415B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BellScheduleManager.DatabaseSetup", "BellScheduleManager.DatabaseSetup\BellScheduleManager.DatabaseSetup.csproj", "{62150683-0CCB-4EE2-8E2A-735CA81E66D9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +36,18 @@ Global
 		{B77D6F2E-88B6-44B2-8341-9EF0D6AE5D7F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B77D6F2E-88B6-44B2-8341-9EF0D6AE5D7F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B77D6F2E-88B6-44B2-8341-9EF0D6AE5D7F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D71524EC-36D8-4400-A3EC-8E9AE64FE224}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D71524EC-36D8-4400-A3EC-8E9AE64FE224}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D71524EC-36D8-4400-A3EC-8E9AE64FE224}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D71524EC-36D8-4400-A3EC-8E9AE64FE224}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F21FE734-03E9-40AA-8DDC-3E85DCA5415B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F21FE734-03E9-40AA-8DDC-3E85DCA5415B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F21FE734-03E9-40AA-8DDC-3E85DCA5415B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F21FE734-03E9-40AA-8DDC-3E85DCA5415B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{62150683-0CCB-4EE2-8E2A-735CA81E66D9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{62150683-0CCB-4EE2-8E2A-735CA81E66D9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{62150683-0CCB-4EE2-8E2A-735CA81E66D9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{62150683-0CCB-4EE2-8E2A-735CA81E66D9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

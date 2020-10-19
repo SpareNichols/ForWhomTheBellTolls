@@ -1,5 +1,6 @@
 import { computed, observable, makeObservable, action } from "mobx";
 import { API_URL } from "../Config";
+import ScheduleStore from "./ScheduleStore";
 
 class UserModel {
     displayName!: string;
@@ -44,10 +45,15 @@ class CurrentUserStore {
         this.user = json;
     }
 
-    async signMeOut() {
+    async signMeOut(scheduleStore: ScheduleStore) {
         const response = await fetch(`${API_URL}/api/auth/logout`, {
             credentials: 'include'
         });
+        this.clear();
+        scheduleStore.clear();
+    }
+
+    clear() {
         this.user = undefined;
     }
 }
