@@ -52,8 +52,9 @@ const ScheduleList = observer((props: Props) => {
                         
                         <Row style={{marginBottom:"10px"}}>
                         <Col>
-                            <Button onClick={() => setScheduleOverviewOpen(!scheduleOverviewOpen)}>Schedule Overview</Button>
+                            <Button aria-controls={`sch-${schedule.scheduleId}`} aria-expanded={scheduleOverviewOpen} onClick={() => setScheduleOverviewOpen(!scheduleOverviewOpen)}>Schedule Overview</Button>
                             <Collapse in={scheduleOverviewOpen}>
+                            <div id={`sch-${schedule.scheduleId}`}>
                             <Table>
                                 <thead>
                                     <tr>
@@ -67,6 +68,7 @@ const ScheduleList = observer((props: Props) => {
                                     <td>{r.readableDescription}</td>
                                 </tr>)}
                             </Table>
+                            </div>
                         </Collapse>
                         </Col>
                         </Row>
