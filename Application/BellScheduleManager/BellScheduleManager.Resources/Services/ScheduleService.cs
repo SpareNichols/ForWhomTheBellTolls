@@ -164,7 +164,7 @@ namespace BellScheduleManager.Resources.Services
                 userCalendarId = userCalendar.Id;
                 
                 // Clear existing events
-                await service.Calendars.Clear(userCalendarId).ExecuteAsync(cancellationToken).ConfigureAwait(false);
+                var result = await service.Calendars.Clear(userCalendarId).ExecuteAsync(cancellationToken).ConfigureAwait(false);
             }
 
             schedule.GoogleCalendarId = userCalendarId;

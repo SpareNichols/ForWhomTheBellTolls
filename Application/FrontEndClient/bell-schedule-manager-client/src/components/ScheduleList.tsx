@@ -5,6 +5,8 @@ import { observer } from 'mobx-react';
 import RingingBell from './RingingBell';
 import UploadSchedule from './UploadSchedule';
 import ScheduleTracker from './ScheduleTracker';
+import { faCalendarMinus } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 interface Props {
     
@@ -21,7 +23,6 @@ const ScheduleList = observer((props: Props) => {
     
     return (
         <>
-            <Row><Col></Col></Row>
             {
                 scheduleStore.isSchedulesLoading &&
                 <Card body>
@@ -31,7 +32,7 @@ const ScheduleList = observer((props: Props) => {
                 </Card>
             }
             
-            <Card body style={{marginTop: "20px"}}>
+            <Card body style={{marginTop: "20px", marginBottom: "20px"}}>
                 <span style={{fontSize: "2rem"}}>Schedules</span>
                 <div style={{float:"right"}}>
                 <UploadSchedule/></div>
@@ -39,7 +40,7 @@ const ScheduleList = observer((props: Props) => {
             {
                 scheduleStore.schedules.map((schedule) => 
                 <Row key={schedule.scheduleId}><Col>
-                <Card style={{marginTop: "20px"}}>
+                <Card style={{marginBottom: "20px"}}>
                     <Card.Header>
                         <Card.Title>{schedule.scheduleName}</Card.Title>
                     </Card.Header>
@@ -67,7 +68,7 @@ const ScheduleList = observer((props: Props) => {
                                     {schedule.googleCalendarId ? "Reset Google Calendar" : "Create Google Calendar"}
                                 </Button>
                         )}
-                        <Button onClick={() => scheduleStore.deleteSchedule(schedule.scheduleId)} variant="danger">Delete Schedule</Button>
+                        <Button style={{marginLeft: "20px"}} onClick={() => scheduleStore.deleteSchedule(schedule.scheduleId)} variant="danger"><FontAwesomeIcon icon={faCalendarMinus} /></Button>
                     </Card.Body>
                 </Card>
                 </Col>

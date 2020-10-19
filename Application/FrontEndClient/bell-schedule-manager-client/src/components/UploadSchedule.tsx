@@ -3,6 +3,8 @@ import { useForm } from 'react-hook-form'
 import { Form, Button, Modal } from 'react-bootstrap';
 import { useStores } from '../hooks/use-stores';
 import { observable } from 'mobx';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCalendarPlus } from '@fortawesome/free-solid-svg-icons';
 
 type Inputs = {
     scheduleName: string;
@@ -29,7 +31,7 @@ const UploadSchedule = (props: Props) => {
 
     return (
         <div style={{marginBottom: "20px"}}>
-        <Button variant="success" onClick={handleShow}>+</Button>
+        <Button variant="success" onClick={handleShow}><FontAwesomeIcon icon={faCalendarPlus} /></Button>
         <Modal show={show} onHide={handleClose}>
             <Modal.Header className="content-justify-center">
                 <Modal.Title>Add Schedule</Modal.Title>

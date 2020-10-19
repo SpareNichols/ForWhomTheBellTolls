@@ -1,0 +1,8 @@
+Name,StartTime,EndTime,StartDate,EndDate,ScheduleRuleType,DaysOfWeek,Url
+A-1 (Math),8:00 AM,10:10 AM,9/1/2020,12/1/2020,ByDayOfWeek,"Monday,Wednesday,Friday",https://en.wikipedia.org/wiki/Mathematics
+A-2 (Social Studies),10:30 AM,12:40 PM,9/1/2020,12/1/2020,ByDayOfWeek,"Monday,Wednesday,Friday",https://en.wikipedia.org/wiki/Social_studies
+Lunch,12:40 PM,1:10 PM,9/1/2020,12/1/2020,ByDayOfWeek,"Monday,Wednesday,Friday",
+A-3 (Science),1:10 PM,3:20 PM,9/1/2020,12/1/2020,ByDayOfWeek,"Monday,Wednesday,Friday",https://en.wikipedia.org/wiki/Science
+B-1 (Language Arts),8:00 AM,11:50 AM,9/1/2020,12/1/2020,ByDayOfWeek,"Tuesday,Thursday",https://en.wikipedia.org/wiki/Language_arts
+Lunch / Break,11:50 AM,12:40 PM,9/1/2020,12/1/2020,ByDayOfWeek,"Tuesday,Thursday",
+B-2 (History),12:40 PM,3:30 PM,9/1/2020,12/1/2020,ByDayOfWeek,"Tuesday,Thursday",https://en.wikipedia.org/wiki/History

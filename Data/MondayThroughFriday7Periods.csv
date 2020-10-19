@@ -1,0 +1,9 @@
+Name,StartTime,EndTime,StartDate,EndDate,ScheduleRuleType,DaysOfWeek,Url
+First Period (Math),8:00 AM,8:50 AM,9/1/2020,12/1/2020,ByDayOfWeek,"Monday,Tuesday,Wednesday,Thursday,Friday",https://en.wikipedia.org/wiki/Mathematics
+Second Period (Social Studies),9:00 AM,9:50 AM,9/1/2020,12/1/2020,ByDayOfWeek,"Monday,Tuesday,Wednesday,Thursday,Friday",https://en.wikipedia.org/wiki/Social_studies
+Third Period (Science),10:00 AM,10:50 AM,9/1/2020,12/1/2020,ByDayOfWeek,"Monday,Tuesday,Wednesday,Thursday,Friday",https://en.wikipedia.org/wiki/Science
+Fourth Period (Language Arts),11:00 AM,11:50 AM,9/1/2020,12/1/2020,ByDayOfWeek,"Monday,Tuesday,Wednesday,Thursday,Friday",https://en.wikipedia.org/wiki/Language_arts
+Lunch,12:00 PM,12:30 PM,9/1/2020,12/1/2020,ByDayOfWeek,"Monday,Tuesday,Wednesday,Thursday,Friday",
+Fifth Period (History),12:40 PM,1:30 PM,9/1/2020,12/1/2020,ByDayOfWeek,"Monday,Tuesday,Wednesday,Thursday,Friday",https://en.wikipedia.org/wiki/History
+Sixth Period (P.E.),1:40 PM,2:30 PM,9/1/2020,12/1/2020,ByDayOfWeek,"Monday,Tuesday,Wednesday,Thursday,Friday",https://en.wikipedia.org/wiki/Physical_education
+Seventh Period (Music),2:40 PM,3:30 PM,9/1/2020,12/1/2020,ByDayOfWeek,"Monday,Tuesday,Wednesday,Thursday,Friday",https://en.wikipedia.org/wiki/Music
