@@ -1,6 +1,6 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useStores } from '../hooks/use-stores'
-import { Card, Row, Col, Button, Table, Spinner } from 'react-bootstrap';
+import { Card, Row, Col, Button, Table, Spinner, Collapse } from 'react-bootstrap';
 import { observer } from 'mobx-react';
 import RingingBell from './RingingBell';
 import UploadSchedule from './UploadSchedule';
@@ -14,13 +14,12 @@ interface Props {
 
 const ScheduleList = observer((props: Props) => {
     const { currentUserStore, scheduleStore } = useStores();
+    const [scheduleOverviewOpen, setScheduleOverviewOpen] = useState(false);
 
     if (scheduleStore.needsInitialization && currentUserStore.isLoggedIn) {
         scheduleStore.getSchedules();
     }
 
-    
-    
     return (
         <>
             {
@@ -45,20 +44,34 @@ const ScheduleList = observer((props: Props) => {
                         <Card.Title>{schedule.scheduleName}</Card.Title>
                     </Card.Header>
                     <Card.Body>
-                        <ScheduleTracker allEvents={schedule.todaysEvents} />
-                        <Table>
-                            <thead>
+                        <Row style={{marginBottom:"10px"}}>
+                            <Col>
+                            <ScheduleTracker allEvents={schedule.todaysEvents} scheduleName={schedule.scheduleName}/>
+                            </Col>
+                        </Row>
+                        
+                        <Row style={{marginBottom:"10px"}}>
+                        <Col>
+                            <Button onClick={() => setScheduleOverviewOpen(!scheduleOverviewOpen)}>Schedule Overview</Button>
+                            <Collapse in={scheduleOverviewOpen}>
+                            <Table>
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Schedule Description</th>
+                                    </tr>
+                                </thead>
+                                {schedule.scheduleRules.map(r => 
                                 <tr>
-                                    <th>Name</th>
-                                    <th>Schedule Description</th>
-                                </tr>
-                            </thead>
-                            {schedule.scheduleRules.map(r => 
-                            <tr>
-                                <td>{r.name}</td>
-                                <td>{r.readableDescription}</td>
-                            </tr>)}
-                        </Table>
+                                    <td>{r.name}</td>
+                                    <td>{r.readableDescription}</td>
+                                </tr>)}
+                            </Table>
+                        </Collapse>
+                        </Col>
+                        </Row>
+                        
+                        
                         {(scheduleStore.isCreatingCalendar ? 
                                 <Button disabled>
                                     <RingingBell size="25px" color="white" />
