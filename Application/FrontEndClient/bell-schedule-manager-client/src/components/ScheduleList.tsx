@@ -1,7 +1,10 @@
 import React from 'react'
 import { useStores } from '../hooks/use-stores'
-import { Card, Row, Col, Button, Table } from 'react-bootstrap';
+import { Card, Row, Col, Button, Table, Spinner } from 'react-bootstrap';
 import { observer } from 'mobx-react';
+import RingingBell from './RingingBell';
+import UploadSchedule from './UploadSchedule';
+import ScheduleTracker from './ScheduleTracker';
 
 interface Props {
     
@@ -9,21 +12,39 @@ interface Props {
 
 const ScheduleList = observer((props: Props) => {
     const { currentUserStore, scheduleStore } = useStores();
+
     if (scheduleStore.needsInitialization && currentUserStore.isLoggedIn) {
         scheduleStore.getSchedules();
     }
+
+    
     
     return (
         <>
-            <Row><Col><h2>Schedules</h2></Col></Row>
+            <Row><Col></Col></Row>
+            {
+                scheduleStore.isSchedulesLoading &&
+                <Card body>
+                    <div>
+                        <RingingBell size="160px" color="lightgrey" />
+                    </div>
+                </Card>
+            }
+            
+            <Card body style={{marginTop: "20px"}}>
+                <span style={{fontSize: "2rem"}}>Schedules</span>
+                <div style={{float:"right"}}>
+                <UploadSchedule/></div>
+            </Card>
             {
                 scheduleStore.schedules.map((schedule) => 
                 <Row key={schedule.scheduleId}><Col>
-                <Card style={{marginBottom: "20px"}}>
+                <Card style={{marginTop: "20px"}}>
                     <Card.Header>
                         <Card.Title>{schedule.scheduleName}</Card.Title>
                     </Card.Header>
                     <Card.Body>
+                        <ScheduleTracker allEvents={schedule.todaysEvents} />
                         <Table>
                             <thead>
                                 <tr>
@@ -37,11 +58,20 @@ const ScheduleList = observer((props: Props) => {
                                 <td>{r.readableDescription}</td>
                             </tr>)}
                         </Table>
-                        <Button onClick={() => scheduleStore.createCalendarForSchedule(schedule.scheduleId)}>Create Google Calendar</Button>
+                        {(scheduleStore.isCreatingCalendar ? 
+                                <Button disabled>
+                                    <RingingBell size="25px" color="white" />
+                                </Button>
+                                : 
+                                <Button onClick={() => scheduleStore.createCalendarForSchedule(schedule.scheduleId)}>
+                                    {schedule.googleCalendarId ? "Reset Google Calendar" : "Create Google Calendar"}
+                                </Button>
+                        )}
                         <Button onClick={() => scheduleStore.deleteSchedule(schedule.scheduleId)} variant="danger">Delete Schedule</Button>
                     </Card.Body>
                 </Card>
-                </Col></Row>)
+                </Col>
+                </Row>)
             }
         </>
     )

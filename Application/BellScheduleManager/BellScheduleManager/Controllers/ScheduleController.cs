@@ -45,7 +45,7 @@ namespace BellScheduleManager.Api.Controllers
             return Ok();
         }
 
-        [HttpPost("update-from-file")]
+        [HttpPost("from-file")]
         public async Task<IActionResult> UpdateScheduleFromFile([FromForm] string scheduleName, [FromForm] IFormFile file)
         {
             using var stream = file.OpenReadStream();

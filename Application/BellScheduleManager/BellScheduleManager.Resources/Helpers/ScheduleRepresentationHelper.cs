@@ -39,24 +39,32 @@ namespace BellScheduleManager.Resources.Helpers
             return rrule.ToString();
         }
 
-        public static Tuple<TimeSpan, TimeSpan> ConvertTimeStringToStartEndTimes(string timeString)
+        public static TimeSpan ConvertTimeStringToTimeSpan(string timeString)
         {
-            var times = timeString.Split('-');
-            if (times.Length != 2)
-            {
-                throw new Exception("Time unable to be parsed into start and end times.");
-            }
+            var time = DateTime.Parse(timeString);
+            return time.TimeOfDay;
+        }
 
-            var startTime = DateTime.Parse(times[0]);
-            var endTime = DateTime.Parse(times[1]);
+        public static DaysOfWeek ConvertStringToDaysOfWeekFlags(string s)
+        {
+            var daysOfWeek = new DaysOfWeek();
 
-            if (startTime > endTime)
-            {
-                // TODO: This will not work for time ranges that cross midnight -- this is unlikely for K-12 bells
-                throw new Exception("The start time cannot come after the end time.");
-            }
+            if (s.Contains("Sunday", StringComparison.InvariantCultureIgnoreCase))
+                daysOfWeek = daysOfWeek | DaysOfWeek.Sunday;
+            if (s.Contains("Monday", StringComparison.InvariantCultureIgnoreCase))
+                daysOfWeek = daysOfWeek | DaysOfWeek.Monday;
+            if (s.Contains("Tuesday", StringComparison.InvariantCultureIgnoreCase))
+                daysOfWeek = daysOfWeek | DaysOfWeek.Tuesday;
+            if (s.Contains("Wednesday", StringComparison.InvariantCultureIgnoreCase))
+                daysOfWeek = daysOfWeek | DaysOfWeek.Wednesday;
+            if (s.Contains("Thursday", StringComparison.InvariantCultureIgnoreCase))
+                daysOfWeek = daysOfWeek | DaysOfWeek.Thursday;
+            if (s.Contains("Friday", StringComparison.InvariantCultureIgnoreCase))
+                daysOfWeek = daysOfWeek | DaysOfWeek.Friday;
+            if (s.Contains("Saturday", StringComparison.InvariantCultureIgnoreCase))
+                daysOfWeek = daysOfWeek | DaysOfWeek.Saturday;
 
-            return new Tuple<TimeSpan, TimeSpan>(startTime.TimeOfDay, endTime.TimeOfDay);
+            return daysOfWeek;
         }
 
         public static string ConvertDaysOfWeekToRRULEString(DaysOfWeek daysOfWeek)

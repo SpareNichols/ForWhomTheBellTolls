@@ -21,6 +21,9 @@ using BellScheduleManager.Resources.Helpers;
 using TimeZoneConverter;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using System.IO;
+using BellScheduleManager.Data.Entities;
+using CsvHelper;
+using System.Globalization;
 
 namespace BellScheduleManager.Resources.Services
 {
@@ -29,7 +32,7 @@ namespace BellScheduleManager.Resources.Services
         Task<List<ScheduleModel>> GetSchedulesAsync(CancellationToken cancellationToken = default(CancellationToken));
         Task<List<ScheduleOccurrenceInstance>> GetScheduledInstancesAsync(DateTime date, CancellationToken cancellationToken = default(CancellationToken));
         Task CreateCalendarForScheduleAsync(Guid scheduleId, CancellationToken cancellationToken = default(CancellationToken));
-        Task CreateScheduleFromFileAsync(string name, Stream fileStream);
+        Task CreateScheduleFromFileAsync(string name, Stream fileStream, CancellationToken cancellationToken = default(CancellationToken));
         Task DeleteScheduleAsync(Guid scheduleId, CancellationToken cancellationToken = default(CancellationToken));
     }
 
@@ -86,6 +89,34 @@ namespace BellScheduleManager.Resources.Services
                     }).ToList()
                 })
                 .ToListAsync(cancellationToken).ConfigureAwait(false);
+
+            foreach (var model in models)
+            {
+                model.TodaysEvents = new List<ScheduleEventModel>();
+                foreach (var rule in model.ScheduleRules)
+                {
+                    if (rule.EndDate > DateTime.Now && ScheduleRepresentationHelper.GetListOfDayOfWeekFromFlags(rule.DaysOfWeek).Any(dow => dow == DateTime.Now.DayOfWeek))
+                    {
+                        if (rule.ScheduleRuleType == ScheduleRuleType.ByDayOfWeek
+                            || (rule.ScheduleRuleType == ScheduleRuleType.ByDayOfWeekEveryOtherWeek && (DateTime.Now - rule.StartDate).TotalDays / 7 % 2 == 0)) {
+                            model.TodaysEvents.Add(new ScheduleEventModel
+                            {
+                                EventTime = DateTime.Today + rule.StartTime,
+                                EventType = "start",
+                                Name = rule.Name
+                            });
+
+                            model.TodaysEvents.Add(new ScheduleEventModel
+                            {
+                                EventTime = DateTime.Today + rule.EndTime,
+                                EventType = "end",
+                                Name = rule.Name
+                            });
+                        }
+                    }
+                }
+            }
+
             return models;
         }
 
@@ -120,7 +151,7 @@ namespace BellScheduleManager.Resources.Services
 
             if (calendars.Items.Count == 0 || !calendars.Items.Any(i => i.Description == schedule.ScheduleId.ToString()))
             {
-                var cal = await service.Calendars.Insert(new Calendar
+                var cal = await service.Calendars.Insert(new Google.Apis.Calendar.v3.Data.Calendar
                 {
                     Summary = $"FWTBT - {schedule.ScheduleName}",
                     Description = schedule.ScheduleId.ToString()
@@ -129,7 +160,11 @@ namespace BellScheduleManager.Resources.Services
             }
             else
             {
-                userCalendarId = calendars.Items.First(i => i.Description == schedule.ScheduleId.ToString()).Id;
+                var userCalendar = calendars.Items.First(i => i.Description == schedule.ScheduleId.ToString());
+                userCalendarId = userCalendar.Id;
+                
+                // Clear existing events
+                await service.Calendars.Clear(userCalendarId).ExecuteAsync(cancellationToken).ConfigureAwait(false);
             }
 
             schedule.GoogleCalendarId = userCalendarId;
@@ -138,7 +173,7 @@ namespace BellScheduleManager.Resources.Services
             {
                 var rrule = ScheduleRepresentationHelper.GenerateRrule(rule.ScheduleRuleType, rule.DaysOfWeek, rule.EndDate.Date + rule.EndTime);
 
-                service.Events.Insert(new Event
+                await service.Events.Insert(new Event
                 {
                     Summary = rule.Name,
                     Location = rule.Url,
@@ -155,7 +190,7 @@ namespace BellScheduleManager.Resources.Services
                     {
                         rrule
                     }
-                }, userCalendarId).Execute();
+                }, userCalendarId).ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
             }
 
@@ -172,6 +207,37 @@ namespace BellScheduleManager.Resources.Services
                 _appDbContext.Remove(scheduleToRemove);
             }
 
+            await _appDbContext.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
+        }
+
+        public async Task CreateScheduleFromFileAsync(string name, Stream fileStream, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            var schedule = new Schedule();
+            schedule.ScheduleName = name;
+            schedule.OwningUser = _httpContextAccessor.HttpContext.User.Identity.Name;
+            schedule.ScheduleRules = new List<ScheduleRule>();
+
+            using var reader = new StreamReader(fileStream);
+            using var csv = new CsvReader(reader, CultureInfo.InvariantCulture);
+
+            var records = csv.GetRecords<ScheduleFileRow>();
+            foreach (var record in records)
+            {
+                var rule = new ScheduleRule
+                {
+                    Name = record.Name,
+                    StartTime = ScheduleRepresentationHelper.ConvertTimeStringToTimeSpan(record.StartTime),
+                    EndTime = ScheduleRepresentationHelper.ConvertTimeStringToTimeSpan(record.EndTime),
+                    StartDate = DateTime.Parse(record.StartDate).Date,
+                    EndDate = DateTime.Parse(record.EndDate).Date,
+                    ScheduleRuleType = record.ScheduleRuleType,
+                    DaysOfWeek = ScheduleRepresentationHelper.ConvertStringToDaysOfWeekFlags(record.DaysOfWeek),
+                    Url = record.Url
+                };
+                schedule.ScheduleRules.Add(rule);
+            }
+
+            _appDbContext.Schedules.Add(schedule);
             await _appDbContext.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
         }
     }
@@ -230,9 +296,11 @@ namespace BellScheduleManager.Resources.Services
     public class ScheduleFileRow
     {
         public string Name { get; set; }
-        public string Time { get; set; }
+        public string StartTime { get; set; }
+        public string EndTime { get; set; }
         public string StartDate { get; set; }
         public string EndDate { get; set; }
+        public ScheduleRuleType ScheduleRuleType { get; set; }
         public string DaysOfWeek { get; set; }
         public string Url { get; set; }
     }
