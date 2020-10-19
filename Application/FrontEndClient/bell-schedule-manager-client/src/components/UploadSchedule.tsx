@@ -45,6 +45,7 @@ const UploadSchedule = (props: Props) => {
                     <Form.Group controlId="formFile">
                         <Form.Label>File To Process</Form.Label>
                         <Form.Control required type="file" name="file" ref={register} />
+                        <Form.Text>Download template <a href="/template.csv" download>here</a></Form.Text>
                     </Form.Group>
                     <Button variant="primary" type="submit">Process Schedule</Button>
                 </Form>

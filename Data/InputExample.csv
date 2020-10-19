@@ -1,3 +1,0 @@
-Name,StartTime,EndTime,StartDate,EndDate,ScheduleRuleType,DaysOfWeek,Url
-"First Period",8:00 AM,8:50 AM,9/1/2020,12/16/2020,ByDayOfWeek,"Monday,Wednesday,Friday",
-"Second Period",9:10,10:40,9/1/2020,12/16/2020,ByDayOfWeek,"Monday,Wednesday,Friday","https://www.google.com"
